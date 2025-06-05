@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Check weather conditions for beach cleanups with ShoreSquad">
+    <title>Weather - ShoreSquad</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../manifest.json">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <style>
+        .weather-page {
+            padding-top: 80px;
+        }
+        
+        .weather-current {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .weather-main-temp {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .weather-main-condition {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .weather-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .weather-detail-item {
+            text-align: center;
+        }
+        
+        .weather-detail-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+        
+        .weather-detail-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .weather-detail-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+        
+        .cleanup-recommendation {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+        
+        .recommendation-good {
+            border-left: 4px solid var(--success-green);
+        }
+        
+        .recommendation-fair {
+            border-left: 4px solid #F39C12;
+        }
+        
+        .recommendation-poor {
+            border-left: 4px solid var(--accent-coral);
+        }
+        
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .forecast-day {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: transform var(--transition-fast);
+        }
+        
+        .forecast-day:hover {
+            transform: translateY(-2px);
+        }
+        
+        .forecast-date {
+            font-weight: 600;
+            color: var(--navy-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .forecast-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .forecast-temps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .forecast-high {
+            font-weight: 600;
+            color: var(--navy-dark);
+        }
+        
+        .forecast-low {
+            color: var(--gray-500);
+        }
+        
+        .forecast-condition {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+        
+        .cleanup-suitability {
+            padding: 0.5rem;
+            border-radius: var(--border-radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .suitability-excellent {
+            background: #D4EDDA;
+            color: #155724;
+        }
+        
+        .suitability-good {
+            background: #FFF3CD;
+            color: #856404;
+        }
+        
+        .suitability-poor {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+        
+        .weather-tips {
+            background: var(--sand-light);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .tip-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .tip-icon {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-top: 0.25rem;
+        }
+        
+        .tip-content h4 {
+            margin-bottom: 0.5rem;
+            color: var(--navy-dark);
+        }
+        
+        .tip-content p {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="../index.html" class="logo" aria-label="ShoreSquad Home">
+                        <i class="fas fa-waves" aria-hidden="true"></i>
+                        <span>ShoreSquad</span>
+                    </a>
+                </div>
+                
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list" role="list">
+                        <li><a href="home.html" class="nav-link">Home</a></li>
+                        <li><a href="map.html" class="nav-link">Find Cleanups</a></li>
+                        <li><a href="weather.html" class="nav-link active">Weather</a></li>
+                        <li><a href="community.html" class="nav-link">Community</a></li>
+                        <li><a href="about.html" class="nav-link">About</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <button class="btn btn-outline" id="login-btn">Log In</button>
+                        <button class="btn btn-primary" id="signup-btn">Join the Squad</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="weather-page">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">Weather Conditions</h1>
+                <p class="section-subtitle">Check if conditions are perfect for your next beach cleanup</p>
+            </div>
+            
+            <!-- Current Weather -->
+            <div class="weather-current">
+                <div class="weather-main-temp" id="current-temp">24°C</div>
+                <div class="weather-main-condition" id="current-condition">
+                    <i class="fas fa-sun"></i> Sunny
+                </div>
+                <div class="weather-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="current-location">Sydney, NSW</span>
+                    <button class="btn btn-outline" id="change-location" style="margin-left: 1rem; color: white; border-color: white;">
+                        <i class="fas fa-edit"></i>
+                        Change Location
+                    </button>
+                </div>
+                
+                <div class="weather-details-grid">
+                    <div class="weather-detail-item">
+                        <div class="weather-detail-icon"><i class="fas fa-eye"></i></div>
+                        <div class="weather-detail-value" id="humidity">65%</div>
+                        <div class="weather-detail-label">Humidity</div>
+                    </div>
+                    <div class="weather-detail-item">
+                        <div class="weather-detail-icon"><i class="fas fa-wind"></i></div>
+                        <div class="weather-detail-value" id="wind-speed">12 km/h</div>
+                        <div class="weather-detail-label">Wind Speed</div>
+                    </div>
+                    <div class="weather-detail-item">
+                        <div class="weather-detail-icon"><i class="fas fa-sun"></i></div>
+                        <div class="weather-detail-value" id="uv-index">6</div>
+                        <div class="weather-detail-label">UV Index</div>
+                    </div>
+                    <div class="weather-detail-item">
+                        <div class="weather-detail-icon"><i class="fas fa-thermometer-half"></i></div>
+                        <div class="weather-detail-value" id="feels-like">27°C</div>
+                        <div class="weather-detail-label">Feels Like</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cleanup Recommendation -->
+            <div class="cleanup-recommendation recommendation-good" id="cleanup-recommendation">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="background: var(--success-green); color: white; padding: 1rem; border-radius: 50%; font-size: 1.5rem;">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--success-green); margin-bottom: 0.5rem;">Perfect for Beach Cleanup!</h3>
+                        <p style="color: var(--gray-600); margin: 0;">Ideal weather conditions for outdoor activities. Great visibility and comfortable temperature.</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="map.html" class="btn btn-primary">
+                        <i class="fas fa-map-marked-alt"></i>
+                        Find Nearby Cleanups
+                    </a>
+                    <button class="btn btn-outline" id="set-reminder">
+                        <i class="fas fa-bell"></i>
+                        Set Weather Alert
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 7-Day Forecast -->
+            <div class="section-header">
+                <h2 class="section-title">7-Day Forecast</h2>
+                <p class="section-subtitle">Plan your cleanup activities for the week ahead</p>
+            </div>
+            
+            <div class="forecast-grid">
+                <div class="forecast-day">
+                    <div class="forecast-date">Today</div>
+                    <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+                    <div class="forecast-temps">
+                        <span class="forecast-high">24°C</span>
+                        <span class="forecast-low">18°C</span>
+                    </div>
+                    <div class="forecast-condition">Sunny</div>
+                    <div class="cleanup-suitability suitability-excellent">Excellent</div>
+                </div>
+                
+                <div class="forecast-day">
+                    <div class="forecast-date">Tomorrow</div>
+                    <div class="forecast-icon"><i class="fas fa-cloud-sun"></i></div>
+                    <div class="forecast-temps">
+                        <span class="forecast-high">22°C</span>
+                        <span class="forecast-low">16°C</span>
+                    </div>
+                    <div class="forecast-condition">Partly Cloudy</div>
+                    <div class="cleanup-suitability suitability-excellent">Excellent</div>
+                </div>
+                
+                <div class="forecast-day">
+                    <div class="forecast-date">Friday</div>
+                    <div class="forecast-icon"><i class="fas fa-cloud"></i></div>
+                    <div class="forecast-temps">
+                        <span class="forecast-high">20°C</span>
+                        <span class="forecast-low">15°C</span>
+                    </div>
+                    <div class="forecast-condition">Cloudy</div>
+                    <div class="cleanup-suitability suitability-good">Good</div>
+                </div>
+                
+                <div class="forecast-day">
+                    <div class="forecast-date">Saturday</div>
+                    <div class="forecast-icon"><i class="fas fa-cloud-rain"></i></div>
+                    <div class="forecast-temps">
+                        <span class="forecast-high">18°C</span>
+                        <span class="forecast-low">12°C</span>
+                    </div>
+                    <div class="forecast-condition">Light Rain</div>
+                    <div class="cleanup-suitability suitability-poor">Poor</div>
+                </div>
+                
+                <div class="forecast-day">
+                    <div class="forecast-date">Sunday</div>
+                    <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+                    <div class="forecast-temps">
+                        <span class="forecast-high">25°C</span>
+                        <span class="forecast-low">19°C</span>
+                    </div>
+                    <div class="forecast-condition">Sunny</div>
+                    <div class="cleanup-suitability suitability-excellent">Excellent</div>
+                </div>
+                
+                <div class="forecast-day">
+                    <div class="forecast-date">Monday</div>
+                    <div class="forecast-icon"><i class="fas fa-cloud-sun"></i></div>
+                    <div class="forecast-temps">
+                        <span class="forecast-high">23°C</span>
+                        <span class="forecast-low">17°C</span>
+                    </div>
+                    <div class="forecast-condition">Partly Cloudy</div>
+                    <div class="cleanup-suitability suitability-good">Good</div>
+                </div>
+                
+                <div class="forecast-day">
+                    <div class="forecast-date">Tuesday</div>
+                    <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+                    <div class="forecast-temps">
+                        <span class="forecast-high">26°C</span>
+                        <span class="forecast-low">20°C</span>
+                    </div>
+                    <div class="forecast-condition">Sunny</div>
+                    <div class="cleanup-suitability suitability-excellent">Excellent</div>
+                </div>
+            </div>
+            
+            <!-- Weather Tips -->
+            <div class="weather-tips">
+                <h3 style="color: var(--navy-dark); margin-bottom: 0.5rem;">Weather Tips for Beach Cleanups</h3>
+                <p style="color: var(--gray-600);">Make the most of your cleanup experience with these weather-smart tips</p>
+                
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-sun"></i></div>
+                        <div class="tip-content">
+                            <h4>Sunny Days</h4>
+                            <p>Perfect for cleanups! Bring sunscreen, water, and a hat. Start early to avoid peak heat.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-cloud"></i></div>
+                        <div class="tip-content">
+                            <h4>Cloudy Weather</h4>
+                            <p>Great visibility and comfortable temperatures. No need for extra sun protection.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-wind"></i></div>
+                        <div class="tip-content">
+                            <h4>Windy Conditions</h4>
+                            <p>Secure loose items and be extra careful with trash bags. Great for flying debris cleanup!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-umbrella"></i></div>
+                        <div class="tip-content">
+                            <h4>Rainy Days</h4>
+                            <p>Consider rescheduling for safety. Light drizzle is okay, but avoid heavy rain and storms.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <i class="fas fa-waves" aria-hidden="true"></i>
+                        <span>ShoreSquad</span>
+                    </a>
+                    <p class="footer-tagline">Making beach cleanups social, fun, and impactful.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Pages</h4>
+                        <ul>
+                            <li><a href="home.html">Home</a></li>
+                            <li><a href="map.html">Find Cleanups</a></li>
+                            <li><a href="weather.html">Weather</a></li>
+                            <li><a href="community.html">Community</a></li>
+                            <li><a href="about.html">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShoreSquad. All rights reserved. Made with 💙 for our planet.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../js/app.js"></script>
+    <script>
+        // Weather page specific JavaScript
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulate real weather updates
+            function updateWeatherData() {
+                const conditions = [
+                    { temp: 24, condition: 'Sunny', icon: 'fas fa-sun', recommendation: 'excellent' },
+                    { temp: 22, condition: 'Partly Cloudy', icon: 'fas fa-cloud-sun', recommendation: 'good' },
+                    { temp: 18, condition: 'Cloudy', icon: 'fas fa-cloud', recommendation: 'good' },
+                    { temp: 16, condition: 'Light Rain', icon: 'fas fa-cloud-rain', recommendation: 'poor' }
+                ];
+                
+                const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
+                
+                document.getElementById('current-temp').textContent = `${randomCondition.temp}°C`;
+                document.getElementById('current-condition').innerHTML = `
+                    <i class="${randomCondition.icon}"></i> ${randomCondition.condition}
+                `;
+                
+                // Update recommendation
+                const recommendation = document.getElementById('cleanup-recommendation');
+                recommendation.className = `cleanup-recommendation recommendation-${randomCondition.recommendation === 'excellent' ? 'good' : randomCondition.recommendation}`;
+            }
+            
+            // Change location functionality
+            document.getElementById('change-location')?.addEventListener('click', () => {
+                const newLocation = prompt('Enter your location:');
+                if (newLocation) {
+                    document.getElementById('current-location').textContent = newLocation;
+                    updateWeatherData();
+                }
+            });
+            
+            // Set reminder functionality
+            document.getElementById('set-reminder')?.addEventListener('click', () => {
+                if ('Notification' in window) {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            new Notification('Weather Alert Set!', {
+                                body: 'You\'ll be notified when conditions are perfect for beach cleanup.',
+                                icon: '../icons/icon-192x192.png'
+                            });
+                        }
+                    });
+                } else {
+                    alert('Weather alerts set! We\'ll notify you when conditions are perfect.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

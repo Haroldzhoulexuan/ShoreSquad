@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join the ShoreSquad community of eco-warriors making a difference">
+    <title>Community - ShoreSquad</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../manifest.json">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <style>
+        .community-page {
+            padding-top: 80px;
+        }
+        
+        .community-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: transform var(--transition-fast);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+        
+        .leaderboard {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .leaderboard-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            transition: background-color var(--transition-fast);
+        }
+        
+        .leaderboard-item:hover {
+            background: var(--gray-50);
+        }
+        
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+        
+        .leaderboard-rank {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--sand-light);
+            color: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+        
+        .leaderboard-rank.top-3 {
+            color: white;
+        }
+        
+        .rank-1 { background: #FFD700; }
+        .rank-2 { background: #C0C0C0; }
+        .rank-3 { background: #CD7F32; }
+        
+        .leaderboard-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+        
+        .leaderboard-info {
+            flex: 1;
+        }
+        
+        .leaderboard-name {
+            font-weight: 600;
+            color: var(--navy-dark);
+            margin-bottom: 0.25rem;
+        }
+        
+        .leaderboard-location {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .leaderboard-score {
+            text-align: right;
+        }
+        
+        .score-points {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 1.125rem;
+        }
+        
+        .score-cleanups {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .activity-feed {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+        }
+        
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-text {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        
+        .activity-time {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .activity-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .activity-btn {
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: all var(--transition-fast);
+        }
+        
+        .activity-btn:hover {
+            background: var(--gray-100);
+            color: var(--primary-blue);
+        }
+        
+        .badges-section {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .badge-item {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            background: var(--gray-50);
+            transition: all var(--transition-fast);
+        }
+        
+        .badge-item.earned {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .badge-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .badge-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.6;
+        }
+        
+        .badge-item.earned .badge-icon {
+            opacity: 1;
+        }
+        
+        .badge-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .badge-description {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        .groups-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .group-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform var(--transition-fast);
+        }
+        
+        .group-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .group-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--sand-light), var(--sand-medium));
+        }
+        
+        .group-name {
+            font-weight: 600;
+            color: var(--navy-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .group-location {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .group-stats {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .group-stat {
+            text-align: center;
+        }
+        
+        .group-stat-number {
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .group-stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+        
+        .group-content {
+            padding: 1.5rem;
+        }
+        
+        .group-description {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        .group-members {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .member-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 2px solid white;
+            margin-left: -8px;
+        }
+        
+        .member-avatar:first-child {
+            margin-left: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="../index.html" class="logo" aria-label="ShoreSquad Home">
+                        <i class="fas fa-waves" aria-hidden="true"></i>
+                        <span>ShoreSquad</span>
+                    </a>
+                </div>
+                
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list" role="list">
+                        <li><a href="home.html" class="nav-link">Home</a></li>
+                        <li><a href="map.html" class="nav-link">Find Cleanups</a></li>
+                        <li><a href="weather.html" class="nav-link">Weather</a></li>
+                        <li><a href="community.html" class="nav-link active">Community</a></li>
+                        <li><a href="about.html" class="nav-link">About</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <button class="btn btn-outline" id="login-btn">Log In</button>
+                        <button class="btn btn-primary" id="signup-btn">Join the Squad</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="community-page">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">ShoreSquad Community</h1>
+                <p class="section-subtitle">Connect with eco-warriors making waves around the world</p>
+            </div>
+            
+            <!-- Community Stats -->
+            <div class="community-stats">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="2847">2,847</div>
+                    <div class="stat-label">Active Members</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="156">156</div>
+                    <div class="stat-label">Beaches Cleaned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="52340">52,340</div>
+                    <div class="stat-label">Lbs Trash Removed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="89">89</div>
+                    <div class="stat-label">Local Groups</div>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 400px; gap: 2rem; margin-bottom: 3rem;">
+                <!-- Activity Feed -->
+                <div class="activity-feed">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--navy-dark);">
+                        <i class="fas fa-heart" style="color: var(--accent-coral); margin-right: 0.5rem;"></i>
+                        Recent Activity
+                    </h3>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar" style="background: var(--primary-blue);">JS</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>Jamie S.</strong> completed a cleanup at <strong>Bondi Beach</strong> and removed 15 lbs of trash! 🌊
+                            </div>
+                            <div class="activity-time">2 hours ago</div>
+                            <div class="activity-actions">
+                                <button class="activity-btn">
+                                    <i class="fas fa-thumbs-up"></i> Like (12)
+                                </button>
+                                <button class="activity-btn">
+                                    <i class="fas fa-comment"></i> Comment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar" style="background: var(--accent-coral);">AC</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>Alex C.</strong> organized a new cleanup event at <strong>Manly Beach</strong> for this weekend!
+                            </div>
+                            <div class="activity-time">5 hours ago</div>
+                            <div class="activity-actions">
+                                <button class="activity-btn">
+                                    <i class="fas fa-thumbs-up"></i> Like (8)
+                                </button>
+                                <button class="activity-btn">
+                                    <i class="fas fa-calendar-plus"></i> Join Event
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar" style="background: var(--success-green);">MR</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>Maya R.</strong> earned the "Ocean Guardian" badge for completing 10 cleanups! 🏆
+                            </div>
+                            <div class="activity-time">1 day ago</div>
+                            <div class="activity-actions">
+                                <button class="activity-btn">
+                                    <i class="fas fa-thumbs-up"></i> Like (24)
+                                </button>
+                                <button class="activity-btn">
+                                    <i class="fas fa-medal"></i> Congratulate
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar" style="background: var(--secondary-blue);">DL</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>David L.</strong> shared a photo from yesterday's <strong>Coogee Beach</strong> cleanup. Amazing teamwork! 📸
+                            </div>
+                            <div class="activity-time">1 day ago</div>
+                            <div class="activity-actions">
+                                <button class="activity-btn">
+                                    <i class="fas fa-thumbs-up"></i> Like (15)
+                                </button>
+                                <button class="activity-btn">
+                                    <i class="fas fa-share"></i> Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar" style="background: #9B59B6;">SP</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>Sarah P.</strong> created a new local group <strong>"Northern Beaches Squad"</strong> - join if you're in the area!
+                            </div>
+                            <div class="activity-time">2 days ago</div>
+                            <div class="activity-actions">
+                                <button class="activity-btn">
+                                    <i class="fas fa-users"></i> Join Group
+                                </button>
+                                <button class="activity-btn">
+                                    <i class="fas fa-info-circle"></i> Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leaderboard -->
+                <div class="leaderboard">
+                    <div class="leaderboard-header">
+                        <h3 style="margin: 0;">
+                            <i class="fas fa-trophy"></i>
+                            Monthly Leaderboard
+                        </h3>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank top-3 rank-1">1</div>
+                        <div class="leaderboard-avatar">ES</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">Emma S.</div>
+                            <div class="leaderboard-location">Sydney, NSW</div>
+                        </div>
+                        <div class="leaderboard-score">
+                            <div class="score-points">1,250 pts</div>
+                            <div class="score-cleanups">8 cleanups</div>
+                        </div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank top-3 rank-2">2</div>
+                        <div class="leaderboard-avatar">MJ</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">Mike J.</div>
+                            <div class="leaderboard-location">Melbourne, VIC</div>
+                        </div>
+                        <div class="leaderboard-score">
+                            <div class="score-points">1,180 pts</div>
+                            <div class="score-cleanups">7 cleanups</div>
+                        </div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank top-3 rank-3">3</div>
+                        <div class="leaderboard-avatar">LK</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">Lisa K.</div>
+                            <div class="leaderboard-location">Brisbane, QLD</div>
+                        </div>
+                        <div class="leaderboard-score">
+                            <div class="score-points">1,095 pts</div>
+                            <div class="score-cleanups">6 cleanups</div>
+                        </div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank">4</div>
+                        <div class="leaderboard-avatar">TW</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">Tom W.</div>
+                            <div class="leaderboard-location">Perth, WA</div>
+                        </div>
+                        <div class="leaderboard-score">
+                            <div class="score-points">980 pts</div>
+                            <div class="score-cleanups">6 cleanups</div>
+                        </div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank">5</div>
+                        <div class="leaderboard-avatar">AR</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">Anna R.</div>
+                            <div class="leaderboard-location">Adelaide, SA</div>
+                        </div>
+                        <div class="leaderboard-score">
+                            <div class="score-points">875 pts</div>
+                            <div class="score-cleanups">5 cleanups</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Badges Section -->
+            <div class="badges-section">
+                <h3 style="margin-bottom: 0.5rem; color: var(--navy-dark);">Achievement Badges</h3>
+                <p style="color: var(--gray-600); margin-bottom: 0;">Earn badges by participating in cleanups and helping the environment</p>
+                
+                <div class="badges-grid">
+                    <div class="badge-item earned">
+                        <div class="badge-icon">🌊</div>
+                        <div class="badge-name">First Wave</div>
+                        <div class="badge-description">Complete your first cleanup</div>
+                    </div>
+                    
+                    <div class="badge-item earned">
+                        <div class="badge-icon">🏖️</div>
+                        <div class="badge-name">Beach Guardian</div>
+                        <div class="badge-description">Clean 5 different beaches</div>
+                    </div>
+                    
+                    <div class="badge-item earned">
+                        <div class="badge-icon">👥</div>
+                        <div class="badge-name">Squad Leader</div>
+                        <div class="badge-description">Organize 3 cleanup events</div>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <div class="badge-icon">🏆</div>
+                        <div class="badge-name">Ocean Champion</div>
+                        <div class="badge-description">Complete 10 cleanups</div>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <div class="badge-icon">⚡</div>
+                        <div class="badge-name">Lightning Fast</div>
+                        <div class="badge-description">Join 3 cleanups in one week</div>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <div class="badge-icon">🌍</div>
+                        <div class="badge-name">Global Impact</div>
+                        <div class="badge-description">Remove 100 lbs of trash</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Local Groups -->
+            <div class="section-header">
+                <h2 class="section-title">Local Groups</h2>
+                <p class="section-subtitle">Join or create a group in your area</p>
+            </div>
+            
+            <div class="groups-section">
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-name">Sydney Shore Squad</div>
+                        <div class="group-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Sydney, NSW
+                        </div>
+                        <div class="group-stats">
+                            <div class="group-stat">
+                                <div class="group-stat-number">248</div>
+                                <div class="group-stat-label">Members</div>
+                            </div>
+                            <div class="group-stat">
+                                <div class="group-stat-number">52</div>
+                                <div class="group-stat-label">Cleanups</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-content">
+                        <div class="group-description">
+                            The original ShoreSquad group! We meet every weekend at different Sydney beaches to make our coastline cleaner and more beautiful.
+                        </div>
+                        <div class="group-members">
+                            <div class="member-avatar">ES</div>
+                            <div class="member-avatar">MJ</div>
+                            <div class="member-avatar">LK</div>
+                            <div class="member-avatar">+245</div>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-users"></i>
+                            Join Group
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-name">Melbourne Beach Warriors</div>
+                        <div class="group-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Melbourne, VIC
+                        </div>
+                        <div class="group-stats">
+                            <div class="group-stat">
+                                <div class="group-stat-number">156</div>
+                                <div class="group-stat-label">Members</div>
+                            </div>
+                            <div class="group-stat">
+                                <div class="group-stat-number">31</div>
+                                <div class="group-stat-label">Cleanups</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-content">
+                        <div class="group-description">
+                            Fighting the good fight along Melbourne's stunning coastline. Early morning cleanups followed by the best coffee in town!
+                        </div>
+                        <div class="group-members">
+                            <div class="member-avatar">CR</div>
+                            <div class="member-avatar">DB</div>
+                            <div class="member-avatar">AF</div>
+                            <div class="member-avatar">+153</div>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-users"></i>
+                            Join Group
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-name">Gold Coast Guardians</div>
+                        <div class="group-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Gold Coast, QLD
+                        </div>
+                        <div class="group-stats">
+                            <div class="group-stat">
+                                <div class="group-stat-number">89</div>
+                                <div class="group-stat-label">Members</div>
+                            </div>
+                            <div class="group-stat">
+                                <div class="group-stat-number">18</div>
+                                <div class="group-stat-label">Cleanups</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-content">
+                        <div class="group-description">
+                            Protecting the paradise that is the Gold Coast. Surf, clean, repeat! Join us for beachside cleanups and post-cleanup swims.
+                        </div>
+                        <div class="group-members">
+                            <div class="member-avatar">JM</div>
+                            <div class="member-avatar">KL</div>
+                            <div class="member-avatar">PN</div>
+                            <div class="member-avatar">+86</div>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-users"></i>
+                            Join Group
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn btn-outline btn-lg">
+                    <i class="fas fa-plus-circle"></i>
+                    Create Your Own Group
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <i class="fas fa-waves" aria-hidden="true"></i>
+                        <span>ShoreSquad</span>
+                    </a>
+                    <p class="footer-tagline">Making beach cleanups social, fun, and impactful.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Pages</h4>
+                        <ul>
+                            <li><a href="home.html">Home</a></li>
+                            <li><a href="map.html">Find Cleanups</a></li>
+                            <li><a href="weather.html">Weather</a></li>
+                            <li><a href="community.html">Community</a></li>
+                            <li><a href="about.html">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShoreSquad. All rights reserved. Made with 💙 for our planet.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../js/app.js"></script>
+    <script>
+        // Community page specific JavaScript
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate counter numbers
+            const counters = document.querySelectorAll('.stat-number[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                let current = 0;
+                const increment = target / 100;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                    }
+                }, 20);
+            });
+            
+            // Activity feed interactions
+            document.querySelectorAll('.activity-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const action = btn.textContent.trim();
+                    console.log('Activity action:', action);
+                    // Add interaction logic here
+                });
+            });
+        });
+    </script>
+</body>
+</html>
