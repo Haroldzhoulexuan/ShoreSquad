@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ShoreSquad Home - Rally your crew and join beach cleanups in your area">
+    <title>Home - ShoreSquad</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="../index.html" class="logo" aria-label="ShoreSquad Home">
+                        <i class="fas fa-waves" aria-hidden="true"></i>
+                        <span>ShoreSquad</span>
+                    </a>
+                </div>
+                
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list" role="list">
+                        <li><a href="home.html" class="nav-link active">Home</a></li>
+                        <li><a href="map.html" class="nav-link">Find Cleanups</a></li>
+                        <li><a href="weather.html" class="nav-link">Weather</a></li>
+                        <li><a href="community.html" class="nav-link">Community</a></li>
+                        <li><a href="about.html" class="nav-link">About</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <button class="btn btn-outline" id="login-btn">Log In</button>
+                        <button class="btn btn-primary" id="signup-btn">Join the Squad</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Welcome to <span class="text-gradient">ShoreSquad</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Your mission starts here. Connect with eco-warriors, find beach cleanups, 
+                        track weather conditions, and make a real impact on our planet.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="map.html" class="btn btn-primary btn-lg">
+                            <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+                            Find Cleanups Near Me
+                        </a>
+                        <a href="community.html" class="btn btn-outline btn-lg">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                            Join the Community
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">2.5K+</div>
+                            <div class="stat-label">Active Members</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">150+</div>
+                            <div class="stat-label">Beaches Cleaned</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50K+</div>
+                            <div class="stat-label">Lbs Trash Removed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions Section -->
+        <section class="quick-actions" style="padding: 4rem 0; background: var(--gray-50);">
+            <div class="container">
+                <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">What do you want to do today?</h2>
+                
+                <div class="actions-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="action-card" style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--shadow-md); text-align: center;">
+                        <div class="action-icon" style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 1rem;">
+                            <i class="fas fa-search-location"></i>
+                        </div>
+                        <h3 style="margin-bottom: 1rem;">Find a Cleanup</h3>
+                        <p style="margin-bottom: 1.5rem; color: var(--gray-600);">Discover beach cleanup events happening near you this week.</p>
+                        <a href="map.html" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i>
+                            Explore Map
+                        </a>
+                    </div>
+                    
+                    <div class="action-card" style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--shadow-md); text-align: center;">
+                        <div class="action-icon" style="font-size: 3rem; color: var(--secondary-blue); margin-bottom: 1rem;">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                        <h3 style="margin-bottom: 1rem;">Check Weather</h3>
+                        <p style="margin-bottom: 1.5rem; color: var(--gray-600);">See if conditions are perfect for your next beach cleanup adventure.</p>
+                        <a href="weather.html" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i>
+                            View Weather
+                        </a>
+                    </div>
+                    
+                    <div class="action-card" style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--shadow-md); text-align: center;">
+                        <div class="action-icon" style="font-size: 3rem; color: var(--accent-coral); margin-bottom: 1rem;">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 style="margin-bottom: 1rem;">Join Community</h3>
+                        <p style="margin-bottom: 1.5rem; color: var(--gray-600);">Connect with other passionate eco-warriors in your area.</p>
+                        <a href="community.html" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i>
+                            Get Connected
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity Section -->
+        <section class="recent-activity" style="padding: 4rem 0;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Squad Activity</h2>
+                    <p class="section-subtitle">See what your fellow eco-warriors have been up to</p>
+                </div>
+                
+                <div class="activity-feed" style="max-width: 800px; margin: 0 auto;">
+                    <div class="activity-item" style="display: flex; gap: 1rem; padding: 1.5rem; background: white; border-radius: 1rem; box-shadow: var(--shadow-sm); margin-bottom: 1rem;">
+                        <div class="activity-avatar" style="width: 50px; height: 50px; background: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                            JS
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-text"><strong>Jamie S.</strong> just completed a cleanup at <strong>Bondi Beach</strong> and removed 15 lbs of trash! 🌊</div>
+                            <div class="activity-time" style="color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">2 hours ago</div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item" style="display: flex; gap: 1rem; padding: 1.5rem; background: white; border-radius: 1rem; box-shadow: var(--shadow-sm); margin-bottom: 1rem;">
+                        <div class="activity-avatar" style="width: 50px; height: 50px; background: var(--accent-coral); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                            AC
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-text"><strong>Alex C.</strong> organized a new cleanup event at <strong>Manly Beach</strong> for this weekend!</div>
+                            <div class="activity-time" style="color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">5 hours ago</div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item" style="display: flex; gap: 1rem; padding: 1.5rem; background: white; border-radius: 1rem; box-shadow: var(--shadow-sm); margin-bottom: 1rem;">
+                        <div class="activity-avatar" style="width: 50px; height: 50px; background: var(--success-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                            MR
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-text"><strong>Maya R.</strong> earned the "Ocean Guardian" badge for completing 10 cleanups! 🏆</div>
+                            <div class="activity-time" style="color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">1 day ago</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="community.html" class="btn btn-outline">
+                        View All Activity
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <i class="fas fa-waves" aria-hidden="true"></i>
+                        <span>ShoreSquad</span>
+                    </a>
+                    <p class="footer-tagline">Making beach cleanups social, fun, and impactful.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Pages</h4>
+                        <ul>
+                            <li><a href="home.html">Home</a></li>
+                            <li><a href="map.html">Find Cleanups</a></li>
+                            <li><a href="weather.html">Weather</a></li>
+                            <li><a href="community.html">Community</a></li>
+                            <li><a href="about.html">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#help">Help Center</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#privacy">Privacy</a></li>
+                            <li><a href="#terms">Terms</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Follow us on Instagram" class="social-link">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="Follow us on TikTok" class="social-link">
+                            <i class="fab fa-tiktok" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="Follow us on Twitter" class="social-link">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="Join our Discord" class="social-link">
+                            <i class="fab fa-discord" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShoreSquad. All rights reserved. Made with 💙 for our planet.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../js/app.js"></script>
+</body>
+</html>

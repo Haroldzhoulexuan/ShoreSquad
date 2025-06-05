@@ -73,6 +73,13 @@ class ShoreSquadApp {
         const findLocationBtn = document.getElementById('find-location-btn');
         if (findLocationBtn) {
             findLocationBtn.addEventListener('click', () => {
+                this.handlePasirRisCleanupJoin();
+            });
+        }
+
+        const findOtherCleanupsBtn = document.getElementById('find-other-cleanups-btn');
+        if (findOtherCleanupsBtn) {
+            findOtherCleanupsBtn.addEventListener('click', () => {
                 this.findUserLocation();
             });
         }
@@ -308,14 +315,19 @@ class ShoreSquadApp {
         } else {
             this.showNotification('Geolocation is not supported by your browser', 'error');
         }
-    }
-
-    initializeMap() {
-        // This would integrate with Google Maps, Mapbox, or similar
-        // For now, we'll create a placeholder that simulates map loading
+    }    initializeMap() {
+        // Check if Google Maps iframe is already loaded
         const mapContainer = document.getElementById('interactive-map');
         if (!mapContainer) return;
 
+        // If it's already a Google Maps container, mark as loaded
+        if (mapContainer.classList.contains('google-map-container')) {
+            this.isMapLoaded = true;
+            this.setupMapInteractions();
+            return;
+        }
+
+        // Fallback for placeholder - shouldn't be needed now
         setTimeout(() => {
             mapContainer.innerHTML = `
                 <div style="height: 100%; background: linear-gradient(135deg, #0077BE, #4A90E2); 
@@ -323,12 +335,53 @@ class ShoreSquadApp {
                      font-size: 1.5rem; border-radius: 1rem;">
                     <div style="text-align: center;">
                         <i class="fas fa-map-marker-alt" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                        <p>Interactive Map Loading...</p>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">Beach cleanup locations will appear here</p>
+                        <p>Google Maps Integration Active</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8;">Next cleanup: Pasir Ris Beach</p>
                     </div>
                 </div>
             `;
             this.isMapLoaded = true;
+        }, 1000);
+    }
+
+    setupMapInteractions() {
+        // Add interaction handlers for the map section
+        const mapSection = document.querySelector('.map-section');
+        if (mapSection) {
+            // Add smooth scroll behavior when clicking "Find Location" button
+            const findLocationBtn = document.getElementById('find-location-btn');
+            if (findLocationBtn) {
+                findLocationBtn.addEventListener('click', () => {
+                    this.handleMapLocationRequest();
+                });
+            }
+        }
+    }
+
+    handleMapLocationRequest() {
+        // Show notification about the next cleanup location
+        this.showNotification('📍 Next cleanup is at Pasir Ris Beach! Check the map above for exact location.', 'success');
+        
+        // Optional: Scroll to map if not visible
+        const mapContainer = document.getElementById('interactive-map');
+        if (mapContainer) {
+            mapContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    handlePasirRisCleanupJoin() {
+        // Show notification about joining the Pasir Ris cleanup
+        this.showNotification('🌊 Great! You\'re interested in the Pasir Ris Beach cleanup! Check your email for event details.', 'success');
+        
+        // In a real app, this would:
+        // 1. Open a registration modal
+        // 2. Send user to signup page
+        // 3. Add event to user's calendar
+        // 4. Send confirmation email
+        
+        // For demo purposes, we'll show the exact location details
+        setTimeout(() => {
+            this.showNotification('📍 Location: Street View Asia (1.381497, 103.955574). See you there!', 'info');
         }, 2000);
     }
 
